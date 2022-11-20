@@ -82,7 +82,6 @@
 .card:active {
   color: #9969FF;
   border-color: #9969FF;
-  background-color: white;
 }
 
 .card h2 {
