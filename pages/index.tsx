@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import MintButton from '../components/MintButton';
+import CollectContact from '../components/CollectContact';
 
 const Home: NextPage = () => {
   return (
@@ -30,6 +31,8 @@ const Home: NextPage = () => {
             width={24}
           />
         </div>
+
+        <CollectContact />
 
         <div className={`${styles.grid} cursor-pointer`}>
           <Link href='/'>
