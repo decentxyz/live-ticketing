@@ -1,5 +1,5 @@
 var Airtable = require('airtable');
-var base = new Airtable({apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY}).base('appDEjZhASr5BYZBX');
+var base = new Airtable({apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY}).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE);
 
 const createContact = async (wallet:any, email:string, phoneNumber:string) => {
   base('WavWRLD').create({

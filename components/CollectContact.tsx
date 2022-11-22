@@ -5,7 +5,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAccount } from "wagmi";
 import formatAddress from "../lib/formatAddress";
-import createContact from "../lib/createContact";
+import createContact from "../lib/airtable/createContact";
+import checkUnique from "../lib/airtable/checkUnique";
+import { check } from "yargs";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const schema = yup.object().shape({
@@ -26,11 +28,18 @@ const CollectContact = () => {
   const { register, handleSubmit, getValues, formState: { errors } } = methods;
   const onSubmit = handleSubmit(data => console.log(data));
   const { address } = useAccount();
-  const [wallet, setWallet] = useState('')
+  
+  const [wallet, setWallet] = useState('');
+  const [matchCount, setMatchCount] = useState();
   useEffect(() => {
     address && 
     setWallet(address);
-  }, [address])
+  }, [address]);
+
+  const addContact = async () => {
+    let result = await checkUnique(wallet);
+    console.log(result)
+  }
 
   return (
     <FormProvider {...methods}>
@@ -55,7 +64,7 @@ const CollectContact = () => {
       </div>
 
       <div className="flex justify-center">
-        <button className="w-fit" type="button" onClick={() => createContact(wallet, getValues("email"), getValues("phoneNumber"))}>
+        <button className="w-fit" type="button" onClick={() => addContact()}>
           <input type="submit" className="mt-4 cursor-pointer bg-white text-indigo-500 px-4 py-1 rounded-full"/>
         </button>
       </div>
