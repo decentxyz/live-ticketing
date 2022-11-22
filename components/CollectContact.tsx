@@ -26,13 +26,22 @@ const CollectContact = () => {
   const { register, handleSubmit, getValues, formState: { errors } } = methods;
   const onSubmit = handleSubmit(data => console.log(data));
   const { address } = useAccount();
+  const [add, setAdd] = useState(false);
   const [wallet, setWallet] = useState('')
   useEffect(() => {
     address && 
     setWallet(address);
   }, [address])
 
+  function addContact() {
+    createContact(wallet, getValues("email"), getValues("phoneNumber"));
+    setAdd(true)
+  }
+
   return (
+    add ? 
+    <p className="rounded-lg bg-white bg-opacity-10 p-4 tracking-widest uppercase text-lg font-[400]">Response Recorded.  Enjoy The Event!</p>
+    :
     <FormProvider {...methods}>
     <form onSubmit={onSubmit} className='gap- bg-white bg-opacity-10 rounded-lg p-4'>
       <div className="space-y-4">
@@ -55,7 +64,7 @@ const CollectContact = () => {
       </div>
 
       <div className="flex justify-center">
-        <button className="w-fit" type="button" onClick={() => createContact(wallet, getValues("email"), getValues("phoneNumber"))}>
+        <button className="w-fit" type="button" onClick={() => addContact()}>
           <input type="submit" className="mt-4 cursor-pointer bg-white text-indigo-500 px-4 py-1 rounded-full"/>
         </button>
       </div>
